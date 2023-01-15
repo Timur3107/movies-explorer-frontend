@@ -1,0 +1,110 @@
+.profile {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
+    justify-content: center;
+    /* margin-top: 74px; */
+}
+
+.profile__title {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.profile__form {
+    display: flex;
+    flex-direction: column;
+    margin: 123px 0 0 0;
+    max-width: 410px;
+    width: 100%;
+}
+
+.profile__element {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.profile__element:not(:last-of-type) {
+    padding: 0 0 19px 0;
+    margin-bottom: 17px;
+    border-bottom: 1px solid #424242;
+}
+
+.profile__type {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.profile__input {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+    color: #FFFFFF;
+    margin: 0;
+    background: none;
+    border: none;
+}
+
+.profile__submit {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    align-self: center;
+    cursor: pointer;
+    margin: 220px 0 16px 0;
+    transition: opacity 0.3s linear;
+}
+
+.profile__submit:hover {
+    opacity: 0.7;
+}
+
+.profile__logout {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #EE3465;
+    text-decoration: none;
+    transition: opacity 0.3s linear;
+}
+
+.profile__logout:hover {
+    opacity: 0.7;
+}
+
+@media (max-width: 550px) {
+    .profile {
+        padding: 0 30px;
+        box-sizing: border-box;
+    }
+}

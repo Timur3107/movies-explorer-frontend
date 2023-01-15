@@ -1,0 +1,7 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+
+/* добавил плавный скролл всей странице */
+html{
+    scroll-behavior: smooth;
+}

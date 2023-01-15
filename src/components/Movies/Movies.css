@@ -1,0 +1,45 @@
+.movies {
+    min-height: 100vh;
+    padding: 0 70px;
+}
+
+.movies__more-button {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    height: 36px;
+    width: 320px;
+    background: #202020;
+    border: 1px solid #424242;
+    border-radius: 6px;
+    margin: 50px auto 80px auto;
+    cursor: pointer;
+    transition: opacity 0.3s linear;
+}
+
+.movies__more-button:hover{
+    opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+    .movies {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 550px) {
+    .movies {
+        padding: 0 10px;
+    }
+
+    .movies__more-button{
+        width: 240px;
+    }
+}
