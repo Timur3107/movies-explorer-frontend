@@ -11,6 +11,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 66px;
+    column-gap: 30px;
 }
 
 .aboutme__name {
@@ -88,9 +89,12 @@
     }
 
     .aboutme__image {
-        margin-left: 49px;
         width: 255px;
         height: 307px;
+    }
+
+    .aboutme__info{
+        column-gap: 49px;
     }
 }
 

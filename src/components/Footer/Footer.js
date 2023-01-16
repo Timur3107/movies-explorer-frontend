@@ -31,8 +31,8 @@ function Footer() {
             <div className='footer__info'>
                 <p className='footer__copyright'>&copy; 2022</p>
                 <div className='footer__links'>
-                    <a href='https://practicum.yandex.ru' className='footer__link'>Яндекс.Практикум</a>
-                    <a href='https://github.com/Timur3107/movies-explorer-frontend' className='footer__link'>Github</a>
+                    <a href='https://practicum.yandex.ru' className='footer__link' target="_blank" rel="noreferrer">Яндекс.Практикум</a>
+                    <a href='https://github.com/Timur3107/movies-explorer-frontend' className='footer__link' target="_blank" rel="noreferrer">Github</a>
                 </div>
             </div>
         </footer>

@@ -1,4 +1,4 @@
-.form__container {
+.form {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@
     margin-bottom: 20px;
 }
 
-.foorm__input-error {
+.form__input-error {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -60,7 +60,7 @@
     margin-top: 9px;
 }
 
-.foorm__input-error:not(:last-of-type) {
+.form__input-error:not(:last-of-type) {
     margin-top: -9px;
 }
 
@@ -83,7 +83,7 @@
     transition: opacity 0.3s linear;
 }
 
-.form__submit:hover{
+.form__submit:hover {
     opacity: 0.7;
 }
 
@@ -111,18 +111,18 @@
     transition: opacity 0.3s linear;
 }
 
-.form__switch:hover{
+.form__switch:hover {
     opacity: 0.7;
 }
 
 @media (max-width: 550px) {
-    .form__container {
+    .form {
         padding: 0 30px;
         align-items: center;
         box-sizing: border-box;
     }
 
-    .form {
+    .form__container {
         width: 100%;
     }
 

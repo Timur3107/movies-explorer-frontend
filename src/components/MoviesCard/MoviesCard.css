@@ -1,6 +1,9 @@
 .moviescard {
     max-width: 364px;
     max-height: 271px;
+    -webkit-box-shadow: 9px 9px 9px -9px rgba(166, 172, 176, 0.56) inset;
+    -moz-box-shadow: 9px 9px 9px -9px rgba(166, 172, 176, 0.56) inset;
+    box-shadow: 9px 9px 9px -9px rgba(166, 172, 176, 0.56) inset;
 }
 
 .moviescard__info {
@@ -50,18 +53,18 @@
     cursor: pointer;
 }
 
-.moviescard__save_active{
+.moviescard__save_active {
     background: #3DDC84;
     background-image: url(../../images/flag-active.svg);
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.moviescard__save_inactive{
+.moviescard__save_inactive {
     background: #313131;
     background-image: url(../../images/cross.svg);
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
 }
 
 .moviescard__image {

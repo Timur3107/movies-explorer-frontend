@@ -18,7 +18,7 @@ function AboutMe() {
                         Решил пройти курс Я.Практикум, чтобы получить нужные знания и навыки.
                         Считаю, что успеха можно добиться в любом возрасте!
                     </p>
-                    <a href="https://github.com/Timur3107" className='aboutme__link'>Github</a>
+                    <a href="https://github.com/Timur3107" className='aboutme__link' target="_blank" rel="noreferrer">Github</a>
                 </div>
                 <img src={myAvatar} alt="Фото" className='aboutme__image' />
             </div>

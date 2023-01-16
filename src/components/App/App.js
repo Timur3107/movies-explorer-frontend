@@ -13,6 +13,8 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
 function App() {
+  document.documentElement.lang = "ru";
+
   const [loggedIn, setLoggedIn] = useState(false)
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false)
   const navigate = useNavigate()

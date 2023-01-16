@@ -5,11 +5,10 @@ import "./Navigation.css"
 import profileIcon from "../../images/profile-icon.svg"
 
 function Navigation({ loggedIn, handleBurgerMenuOpen }) {
-    const screenWidth = window.screen.width
     const location = useLocation();
     const [toggleState, setToggleState] = useState(location.pathname)
 
-    useEffect(()=>{
+    useEffect(() => {
         setToggleState(location.pathname)
     }, [location.pathname])
 
@@ -19,20 +18,21 @@ function Navigation({ loggedIn, handleBurgerMenuOpen }) {
                 <Link to="/signup" className="navigation__registration">Регистрация</Link>
                 <Link to="/signin" className="navigation__login">Войти</Link>
             </div>
-        ) : screenWidth <= 900 ? (
-            <button type="button" className="navigation__burgermenu-button" onClick={handleBurgerMenuOpen}></button>
         ) : (
-            <div className="navigation__navigation-list">
-                <nav className="navigation__link-list">
-                    <li><Link to="/movies" className={`navigation__link navigation__films ${toggleState === "/movies" ? "navigation__link_active" : ""}`}>Фильмы</Link></li>
-                    <li><Link to="/saved-movies" className={`navigation__link navigation__saved-films ${toggleState === "/saved-movies" ? "navigation__link_active" : ""}`}>Сохранённые фильмы</Link></li>
-                </nav>
+            <>
+                <button type="button" className="navigation__burgermenu-button" onClick={handleBurgerMenuOpen}></button>
+                <div className="navigation__navigation-list">
+                    <ul className="navigation__link-list">
+                        <li><Link to="/movies" className={`navigation-link navigation__films ${toggleState === "/movies" ? "navigation-link_active" : ""}`}>Фильмы</Link></li>
+                        <li><Link to="/saved-movies" className={`navigation-link navigation__saved-films ${toggleState === "/saved-movies" ? "navigation-link_active" : ""}`}>Сохранённые фильмы</Link></li>
+                    </ul>
 
-                <Link to="/profile" className="navigation__profile">
-                    <img src={profileIcon} alt="иконка профиля" />
-                    <p className="navigation__profile-text">Аккаунт</p>
-                </Link>
-            </div>
+                    <Link to="/profile" className="navigation-profile">
+                        <img src={profileIcon} alt="иконка профиля" />
+                        <p className="navigation-profile__text">Аккаунт</p>
+                    </Link>
+                </div>
+            </>
         )
     )
 }

@@ -27,6 +27,12 @@
     width: 100%;
 }
 
+.profile__element-list{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 .profile__element {
     display: flex;
     align-items: center;

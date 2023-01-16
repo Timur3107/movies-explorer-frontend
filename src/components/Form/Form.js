@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 function Form({ welcome, children, nameButton, question, nameSwitch, pathSwitch, handleAuthorization }) {
 
     return (
-        <div className='form__container'>
+        <div className='form'>
             <Logo></Logo>
             <h3 className='form__welcome'>{welcome}</h3>
 
-            <form className='form' onSubmit={handleAuthorization}>
+            <form className='form__container' onSubmit={handleAuthorization}>
                 <div className='form__inputs-list'>
                     {children}
                 </div>

@@ -33,7 +33,9 @@ function Header({ loggedIn, handleBurgerMenuOpen }) {
         <header className={`header ${headerClass}`}>
                 <div className="header__cover">
                     <Logo></Logo>
+                    <div className="navigation">
                     <Navigation loggedIn={loggedIn} handleBurgerMenuOpen={handleBurgerMenuOpen}></Navigation>
+                    </div>
                 </div>
         </header>
     )
