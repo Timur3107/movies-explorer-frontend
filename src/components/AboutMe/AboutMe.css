@@ -1,0 +1,135 @@
+.aboutme {
+    display: flex;
+    max-width: 1280px;
+    flex-direction: column;
+    padding: 110px 70px 0 70px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.aboutme__info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 66px;
+    column-gap: 30px;
+}
+
+.aboutme__name {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin: 0 0 18px 0;
+}
+
+.aboutme__specialization {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.aboutme__description {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin: 26px 0 99px;
+    max-width: 600px;
+}
+
+.aboutme__link {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: opacity 0.3s linear;
+}
+
+.aboutme__link:hover {
+    opacity: 0.7;
+}
+
+.aboutme__image {
+    width: 270px;
+    height: 327px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+@media (max-width: 900px) {
+    .aboutme {
+        padding: 90px 50px 0 50px;
+    }
+
+    .aboutme__name {
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    .aboutme__specialization {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .aboutme__description {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .aboutme__image {
+        width: 255px;
+        height: 307px;
+    }
+
+    .aboutme__info{
+        column-gap: 49px;
+    }
+}
+
+@media (max-width: 550px) {
+    .aboutme {
+        padding: 70px 14px 0 14px;
+    }
+
+    .aboutme__info {
+        flex-direction: column-reverse;
+        margin-top: 60px;
+    }
+
+    .aboutme__image {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        max-width: 352px;
+        max-height: 352px;
+    }
+
+    .aboutme__name {
+        margin: 40px 0 18px 0;
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .aboutme__specialization {
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .aboutme__description {
+        font-size: 11px;
+        line-height: 16px;
+        margin: 20px 0 40px;
+    }
+}

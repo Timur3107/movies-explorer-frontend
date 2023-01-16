@@ -1,0 +1,37 @@
+.navtab {
+    display: flex;
+    justify-content: center;
+    background: #272727;
+}
+
+.navtab__list {
+    display: flex;
+    column-gap: 40px;
+    padding: 0;
+    margin: 24px 0 24px 0;
+    list-style-type: none
+}
+
+.navtab__link {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+    transition: opacity 0.3s linear;
+}
+
+.navtab__link:hover{
+    opacity: 0.7;
+}
+
+@media (max-width: 550px) {
+    .navtab__link {
+        font-size: 11px;
+    }
+
+    .navtab__list{
+        column-gap: 24px;
+    }
+}
