@@ -36,6 +36,15 @@
     border: none;
 }
 
+.search__input-error {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #EE3465;
+}
+
 .search__submit {
     display: flex;
     align-items: center;
@@ -49,7 +58,12 @@
     cursor: pointer;
 }
 
-.search__submit:hover{
+.search__submit_inactive{
+    background: #6b6c6d;
+    border: 1px solid #6b6c6d;
+}
+
+.search__submit:hover {
     opacity: 0.7;
 }
 

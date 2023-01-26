@@ -1,13 +1,12 @@
 import './MoviesCard.css';
-import React, { useState } from "react";
+import React from "react";
 
-function MoviesCard({ handleSaveMovie, handleDeleteMovie, movie, isSavedMovies }) {
+function MoviesCard({ handleSaveMovie, handleDeleteMovie, movie, isSavedMovies, isLiked }) {
     const { nameRU, duration, image, trailerLink } = movie
-    const [isLiked, setIsLiked] = useState(false)
 
     function handleSaveMovieClick() {
         handleSaveMovie(movie)
-        setIsLiked(!isLiked)
+        // setIsLiked(!isLiked)
     }
 
     function handleDeleteMovieClick() {
@@ -19,7 +18,7 @@ function MoviesCard({ handleSaveMovie, handleDeleteMovie, movie, isSavedMovies }
             <div className='moviescard__info'>
                 <div className='moviescard__text-container'>
                     <h3 className='moviescard__name'>{nameRU}</h3>
-                    <p className='moviescard__duration'>{duration}</p>
+                    <p className='moviescard__duration'>{`${Math.floor(duration / 60)}ч ${duration % 60}м`}</p>
                 </div>
                 {isSavedMovies ?
                     <button type='button' className="moviescard__save moviescard__save_inactive" onClick={handleDeleteMovieClick} />
@@ -29,7 +28,7 @@ function MoviesCard({ handleSaveMovie, handleDeleteMovie, movie, isSavedMovies }
 
             </div>
             <a className='moviescard__image-link' href={trailerLink} target="_blank" rel="noreferrer">
-                <img className='moviescard__image' src={`https://api.nomoreparties.co/${image.url}`} alt='изображение к фильму'></img>
+                <img className='moviescard__image' src={isSavedMovies ? image : `https://api.nomoreparties.co/${image.url}`} alt='изображение к фильму'></img>
             </a>
         </li>
     );

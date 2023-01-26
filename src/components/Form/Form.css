@@ -64,6 +64,23 @@
     margin-top: -9px;
 }
 
+.form__input-error-api{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    color: #EE3465;
+    position: absolute;
+    bottom: 30%;
+    width: 100%;
+    text-align: center;
+}
+
+.form__container-submit{
+    position: relative;
+}
+
 .form__submit {
     font-family: 'Inter';
     font-style: normal;
@@ -81,6 +98,11 @@
     border: none;
     cursor: pointer;
     transition: opacity 0.3s linear;
+}
+
+.form__submit_inactive{
+    cursor: not-allowed;
+    background: #7a7b7c;
 }
 
 .form__submit:hover {
