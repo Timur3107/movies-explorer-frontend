@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3001';
+export const BASE_URL = 'https://api.movies-explorer.gin.nomoredomains.club';
 
 const _checkResponse = (res) => {
     return res.json().then((data)=>{

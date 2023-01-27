@@ -15,11 +15,19 @@ function SavedMovies({ isLoading, handleSearch, handleSaveMovie, handleDeleteMov
 
     return (
         <section className='savedmovies'>
-            <SearchForm handleSearch={handleSearch} handleChangeCheckbox={сhangeCheckbox} searchText={searchText}></SearchForm>
+            <SearchForm handleSearch={handleSearch} handleChangeCheckbox={сhangeCheckbox} isChecked={isChecked} searchText={searchText}></SearchForm>
             {isLoading ? (
                 <Preloader />
             ) : (
-                <MoviesCardList handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} movies={movies} userSavedMovie={userSavedMovie} isSavedMovies={true}></MoviesCardList>
+                searchText &&
+                    movies.length === 0 ?
+                    (
+                        <p className='movies__not-found'>Ничего не найдено</p>
+                    ) :
+                    (
+                        <MoviesCardList handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} movies={movies} userSavedMovie={userSavedMovie} isSavedMovies={true}></MoviesCardList>
+                    )
+
             )
             }
         </section>

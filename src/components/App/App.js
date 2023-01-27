@@ -15,8 +15,6 @@ import * as mainApi from "../../utils/MainApi"
 import * as moviesApi from "../../utils/MoviesApi"
 import { currentUserContext } from "../../context/currentUserContext";
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-// import Preloader from "../Preloader/Preloader";
-
 
 function App() {
   document.documentElement.lang = "ru";
@@ -83,21 +81,20 @@ function App() {
     setBeatfilmMoviesToRender(beatfilmMovies.slice(0, numberOfInitialMovies))
   }, [numberOfInitialMovies, beatfilmMovies])
 
-  // если пользователь авторизован, то делаю запрос к своему апи на загрузку сохраненных карточек
-  useEffect(() => {
-    if (loggedIn) {
-      setIsLoading(true)
-      mainApi.getMyMovies().then((data) => {
-        setSavedMovie(data.data)
+
+  // получаю карточки со своего API
+  const getMyMovies = () => {
+    setIsLoading(true)
+    mainApi.getMyMovies().then((data) => {
+      setSavedMovie(data.data)
+    })
+      .catch((error) => {
+        console.log(error)
       })
-        .catch((error) => {
-          console.log(error)
-        })
-        .finally(() => {
-          setIsLoading(false)
-        })
-    }
-  }, [loggedIn])
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
 
   // после изменений в сохраненных карточках выполняем функцию фильтрации
   useEffect(() => {
@@ -112,6 +109,32 @@ function App() {
     }))
   }
 
+  // после изменений в сохраненных карточках позьзователя выполняем функцию фильтрации
+  useEffect(() => {
+    filterUserSavedMovieForRequest()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userSavedMovie])
+
+  // функция, которая фильтрует сохраненные карточки пользователя, чтобы найти карточки по запросу
+  const filterUserSavedMovieForRequest = () => {
+    const isChecked = JSON.parse(localStorage.getItem('isCheckedForSavedMovies'))
+    const requestSavedMovies = JSON.parse(localStorage.getItem('filteringRequestForSavedMovies'))
+    if (requestSavedMovies) {
+      const userSavedMovieFiltered = userSavedMovie.filter(item => {
+        return item.nameRU.toLowerCase().includes(requestSavedMovies.toLowerCase())
+      })
+      if (isChecked) {
+        const newMovies = userSavedMovieFiltered.filter(item => item.duration <= 40)
+        setUserSavedMovieToRender(newMovies)
+      } else {
+        setUserSavedMovieToRender(userSavedMovieFiltered)
+      }
+
+    } else {
+      setUserSavedMovieToRender(userSavedMovie)
+    }
+  }
+
   // проверка наличия токена авторизации
   const tokenCheck = () => {
     setIsLoading(true)
@@ -121,6 +144,7 @@ function App() {
         if (data) {
           setLoggedIn(true)
           setCurrentUser(data)
+          getMyMovies()
         }
       })
         .catch((error) => {
@@ -233,6 +257,7 @@ function App() {
       })
   }
 
+  // обработка поискового запроса для сохраненных карточек
   const handleSearchForSavedMovies = (film, isChecked) => {
     const filteredMovie = userSavedMovie.filter(item => {
       return item.nameRU.toLowerCase().includes(film.toLowerCase())
@@ -240,22 +265,22 @@ function App() {
     localStorage.setItem("filteringRequestForSavedMovies", JSON.stringify(film))
     setUserSavedMovieToRender(filteredMovie)
 
+    if (isChecked) {
+      handleChangeCheckboxForSavedMovies(isChecked)
+    }
   }
 
+  // обработчик на переключатель "короткометражки" сохраненных карточек
   const handleChangeCheckboxForSavedMovies = (isChecked) => {
     localStorage.setItem('isCheckedForSavedMovies', isChecked)
 
     const oldMovies = userSavedMovieToRender
     if (oldMovies) {
       if (isChecked) {
-        const newMovies = oldMovies.filter(item => item.duration <= 40)
-        setUserSavedMovieToRender(newMovies)
-        localStorage.setItem("filteredMovieIsCheckedForSavedMovies", JSON.stringify(newMovies))
+        filterUserSavedMovieForRequest()
       }
       else {
-        setUserSavedMovieToRender(oldMovies)
-        console.log(oldMovies)
-        localStorage.removeItem("filteredMovieIsCheckedForSavedMovies")
+        filterUserSavedMovieForRequest()
       }
     }
   }
@@ -294,8 +319,7 @@ function App() {
 
   // сохранение фильма
   const handleSaveMovie = (movie) => {
-    const isSaved = savedMovie.some(item => item.movieId === movie.id)
-
+    const isSaved = savedMovie.some(item => item.movieId === movie.id && item.owner === currentUser.data._id)
     if (isSaved) {
       handleDeleteMovie(movie)
     } else {
@@ -310,10 +334,7 @@ function App() {
 
   // удаление сохраненного фильма
   const handleDeleteMovie = (movie) => {
-    const newSavedMovie = savedMovie.find(item => {
-      console.log(item.movieId, movie.id, movie.movieId)
-      return item.movieId === movie.id || movie.movieId
-    })
+    const newSavedMovie = savedMovie.find(item => (item.movieId === movie.id || item.movieId === movie.movieId) && item.owner === currentUser.data._id)
 
     mainApi.deleteMovie(newSavedMovie._id)
       .then(() => {
