@@ -30,6 +30,7 @@ function App() {
   const [userSavedMovie, setUserSavedMovie] = useState([])
   const [userSavedMovieToRender, setUserSavedMovieToRender] = useState([])
 
+  const [allBeatfilmMovies, setAllBeatfilmMovies] = useState([])
   const [beatfilmMovies, setBeatfilmMovies] = useState([])
   const [beatfilmMoviesToRender, setBeatfilmMoviesToRender] = useState([])
   const [isLoadMoreBthInactive, setIsLoadMoreBthInactive] = useState(false)
@@ -212,6 +213,8 @@ function App() {
     setSavedMovie([])
     setUserSavedMovie([])
     setBeatfilmMovies([])
+    setAllBeatfilmMovies([])
+    setBeatfilmMoviesToRender([])
   }
 
 
@@ -233,28 +236,37 @@ function App() {
     }
   }
 
+// внутренний обработчик обработчика поисковых запросов
+  const internalHandleSearch = (allBeatfilmMovies, isChecked, film) => {
+    const filteredMovie = allBeatfilmMovies.filter(item => {
+      return item.nameRU.toLowerCase().includes(film.toLowerCase())
+    })
+    setBeatfilmMovies(filteredMovie)
+    localStorage.setItem("filteredMovie", JSON.stringify(filteredMovie))
+    localStorage.setItem("filteringRequest", JSON.stringify(film))
+
+    if (isChecked) {
+      handleChangeCheckbox(isChecked)
+    }
+  }
 
   // обработка поискового запроса
   const handleSearch = (film, isChecked) => {
-    setIsLoading(true)
-    moviesApi.getBeatFilmMovies().then((data) => {
-      const filteredMovie = data.filter(item => {
-        return item.nameRU.toLowerCase().includes(film.toLowerCase())
+    if (!allBeatfilmMovies.length) {
+      setIsLoading(true)
+      moviesApi.getBeatFilmMovies().then((data) => {
+        setAllBeatfilmMovies(data)
+        internalHandleSearch(data, isChecked, film)
       })
-      setBeatfilmMovies(filteredMovie)
-      localStorage.setItem("filteredMovie", JSON.stringify(filteredMovie))
-      localStorage.setItem("filteringRequest", JSON.stringify(film))
-
-      if (isChecked) {
-        handleChangeCheckbox(isChecked)
-      }
-    })
-      .catch((error) => {
-        console.log(error)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    } else {
+      internalHandleSearch(allBeatfilmMovies, isChecked, film)
+    }
   }
 
   // обработка поискового запроса для сохраненных карточек
