@@ -1,4 +1,4 @@
-export const MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
+import {MOVIES_URL} from "../config/config"
 
 const _checkResponse = (res) => {
     if (res.ok) {

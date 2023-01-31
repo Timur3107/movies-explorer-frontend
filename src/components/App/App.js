@@ -17,6 +17,16 @@ import { currentUserContext } from "../../context/currentUserContext";
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import ProtectedRouteForAutorize from '../ProtectedRouteForAutorize/ProtectedRouteForAutorize';
 
+import {
+  DURATION_OF_SHORT_FILMS,
+  NUMBER_OF_INITIAL_MOVIES_FOR_LARGE_SCREENS,
+  NUMBER_OF_INITIAL_MOVIES_FOR_TABLETS,
+  NUMBER_OF_INITIAL_MOVIES_FOR_MOBILE,
+  NUMBER_OF_LOADED_MOVIES_FOR_LARGE_SCREENS,
+  NUMBER_OF_LOADED_MOVIES_FOR_TABLETS,
+  NUMBER_OF_LOADED_MOVIES_FOR_MOBILE,
+} from "../../config/config"
+
 function App() {
   document.documentElement.lang = "ru";
   const navigate = useNavigate()
@@ -126,7 +136,7 @@ function App() {
         return item.nameRU.toLowerCase().includes(requestSavedMovies.toLowerCase())
       })
       if (isChecked) {
-        const newMovies = userSavedMovieFiltered.filter(item => item.duration <= 40)
+        const newMovies = userSavedMovieFiltered.filter(item => item.duration <= DURATION_OF_SHORT_FILMS)
         setUserSavedMovieToRender(newMovies)
       } else {
         setUserSavedMovieToRender(userSavedMovieFiltered)
@@ -228,7 +238,7 @@ function App() {
     const oldMovies = JSON.parse(localStorage.getItem('filteredMovie'))
     if (oldMovies) {
       if (isChecked) {
-        const newMovies = oldMovies.filter(item => item.duration <= 40)
+        const newMovies = oldMovies.filter(item => item.duration <= DURATION_OF_SHORT_FILMS)
         setBeatfilmMovies(newMovies)
         localStorage.setItem("filteredMovieIsChecked", JSON.stringify(newMovies))
       }
@@ -304,19 +314,19 @@ function App() {
   const widthDisplayCheck = (numberOfInitialMovies) => {
     if (window.innerWidth >= 1280) {
       if (numberOfInitialMovies === 0) {
-        setNumberOfInitialMovies(12)
+        setNumberOfInitialMovies(NUMBER_OF_INITIAL_MOVIES_FOR_LARGE_SCREENS)
       }
-      setNumberOfLoadedMovies(3)
+      setNumberOfLoadedMovies(NUMBER_OF_LOADED_MOVIES_FOR_LARGE_SCREENS)
     } else if (window.innerWidth >= 768 && window.innerWidth < 1280) {
       if (numberOfInitialMovies === 0) {
-        setNumberOfInitialMovies(8)
+        setNumberOfInitialMovies(NUMBER_OF_INITIAL_MOVIES_FOR_TABLETS)
       }
-      setNumberOfLoadedMovies(2)
+      setNumberOfLoadedMovies(NUMBER_OF_LOADED_MOVIES_FOR_TABLETS)
     } else {
       if (numberOfInitialMovies === 0) {
-        setNumberOfInitialMovies(5)
+        setNumberOfInitialMovies(NUMBER_OF_INITIAL_MOVIES_FOR_MOBILE)
       }
-      setNumberOfLoadedMovies(2)
+      setNumberOfLoadedMovies(NUMBER_OF_LOADED_MOVIES_FOR_MOBILE)
     }
   }
 
@@ -390,7 +400,7 @@ function App() {
             <Route path="/profile" element={<Profile errorApi={errorApi} setErrorApi={setErrorApi} isLoading={isLoading} handleUpdateUser={handleUpdateUser} handleLogOut={handleLogOut}></Profile>}></Route>
           </Route>
 
-          <Route element={<ProtectedRouteForAutorize loggedIn={loggedIn}/>}>
+          <Route element={<ProtectedRouteForAutorize loggedIn={loggedIn} />}>
             <Route path="/signin" element={<Login setErrorApi={setErrorApi} errorApi={errorApi} handleLogin={handleLogin}></Login>}></Route>
             <Route path="/signup" element={<Register setErrorApi={setErrorApi} errorApi={errorApi} handleRegister={handleRegister}></Register>}></Route>
           </Route>

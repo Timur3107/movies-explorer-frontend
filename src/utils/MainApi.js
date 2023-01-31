@@ -1,7 +1,8 @@
+// import { BASE_URL } from "../config/config"
 export const BASE_URL = 'https://api.movies-explorer.gin.nomoredomains.club';
-
+// const BASE_URL = 'http://localhost:3001';
 const _checkResponse = (res) => {
-    return res.json().then((data)=>{
+    return res.json().then((data) => {
         if (res.ok) {
             return data
         }
