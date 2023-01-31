@@ -15,7 +15,7 @@ import * as mainApi from "../../utils/MainApi"
 import * as moviesApi from "../../utils/MoviesApi"
 import { currentUserContext } from "../../context/currentUserContext";
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import Preloader from '../Preloader/Preloader';
+import ProtectedRouteForAutorize from '../ProtectedRouteForAutorize/ProtectedRouteForAutorize';
 
 function App() {
   document.documentElement.lang = "ru";
@@ -384,14 +384,16 @@ function App() {
           <Route path="/" element={<Main></Main>}></Route>
 
           {/* защищенные роуты */}
-            <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
-              <Route path="/movies" element={<Movies isLoading={isLoading} handleChangeCheckbox={handleChangeCheckbox} userSavedMovie={userSavedMovie} isLoadMoreBthInactive={isLoadMoreBthInactive} handleLoadMoreMovies={handleLoadMoreMovies} movies={beatfilmMoviesToRender} handleSearch={handleSearch} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie}></Movies>} />
-              <Route path="/saved-movies" element={<SavedMovies handleChangeCheckbox={handleChangeCheckboxForSavedMovies} isLoading={isLoading} movies={userSavedMovieToRender} userSavedMovie={userSavedMovie} handleSearch={handleSearchForSavedMovies} handleDeleteMovie={handleDeleteMovie} handleSaveMovie={handleSaveMovie}></SavedMovies>}></Route>
-              <Route path="/profile" element={<Profile errorApi={errorApi} setErrorApi={setErrorApi} isLoading={isLoading} handleUpdateUser={handleUpdateUser} handleLogOut={handleLogOut}></Profile>}></Route>
-            </Route>
-          <Route path="/signin" element={<Login setErrorApi={setErrorApi} errorApi={errorApi} handleLogin={handleLogin}></Login>}></Route>
-          <Route path="/signup" element={<Register setErrorApi={setErrorApi} errorApi={errorApi} handleRegister={handleRegister}></Register>}></Route>
+          <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
+            <Route path="/movies" element={<Movies isLoading={isLoading} handleChangeCheckbox={handleChangeCheckbox} userSavedMovie={userSavedMovie} isLoadMoreBthInactive={isLoadMoreBthInactive} handleLoadMoreMovies={handleLoadMoreMovies} movies={beatfilmMoviesToRender} handleSearch={handleSearch} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie}></Movies>} />
+            <Route path="/saved-movies" element={<SavedMovies handleChangeCheckbox={handleChangeCheckboxForSavedMovies} isLoading={isLoading} movies={userSavedMovieToRender} userSavedMovie={userSavedMovie} handleSearch={handleSearchForSavedMovies} handleDeleteMovie={handleDeleteMovie} handleSaveMovie={handleSaveMovie}></SavedMovies>}></Route>
+            <Route path="/profile" element={<Profile errorApi={errorApi} setErrorApi={setErrorApi} isLoading={isLoading} handleUpdateUser={handleUpdateUser} handleLogOut={handleLogOut}></Profile>}></Route>
+          </Route>
 
+          <Route element={<ProtectedRouteForAutorize loggedIn={loggedIn}/>}>
+            <Route path="/signin" element={<Login setErrorApi={setErrorApi} errorApi={errorApi} handleLogin={handleLogin}></Login>}></Route>
+            <Route path="/signup" element={<Register setErrorApi={setErrorApi} errorApi={errorApi} handleRegister={handleRegister}></Register>}></Route>
+          </Route>
           {/* страница "ничего не найдено" */}
           <Route path='/*' element={<PageNotFound></PageNotFound>}></Route>
 
