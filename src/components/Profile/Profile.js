@@ -18,12 +18,17 @@ function Profile({ errorApi, setErrorApi, isLoading, handleUpdateUser, handleLog
             setErrorApi('')
         }
 
-        setIsValid(e.target.closest("form").checkValidity())
+        if (value === currentUser.data.name || value === currentUser.data.email) {
+            setIsValid(false)
+        } else {
+            setIsValid(e.target.closest("form").checkValidity())
+        }
 
         setData({
             ...data,
             [name]: value
         })
+
     }
 
     function handleSubmit(e) {
@@ -55,7 +60,7 @@ function Profile({ errorApi, setErrorApi, isLoading, handleUpdateUser, handleLog
                     </ul>
                     <div className='profile__container-submit'>
                         <span className='profile__input-error-api'>{errorApi}</span>
-                        <button className={`profile__submit ${isValid || errorApi ? 'profile__submit_active' : ""}`} type='submit' disabled={!isValid || errorApi}>Редактировать</button>
+                        <button className={`profile__submit ${isValid && !errorApi ? 'profile__submit_active' : ""}`} type='submit' disabled={!isValid || errorApi}>Редактировать</button>
                     </div>
                 </form>
                 <Link to="/" className='profile__logout' onClick={handleLogOut}>Выйти из аккаунта</Link>
