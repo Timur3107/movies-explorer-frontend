@@ -51,6 +51,9 @@ function App() {
   // количество подгружаемых фильмов при нажатии на кнопку loadMore для разных разрешений
   const [numberOfLoadedMovies, setNumberOfLoadedMovies] = useState(0)
 
+  const [isCheckedForSavedMovies, setIsCheckedForSavedMovies] = useState(false)
+  const [filmRequestForSavedMovies, setFilmRequestForSavedMovies] = useState('')
+
   // добавляю слушатель, чтобы отслеживать ширину дисплея
   window.addEventListener("resize", () => {
     setTimeout(() => {
@@ -61,7 +64,7 @@ function App() {
   // при загрузки страницы проверяю токен авторизации и ширину дисплея
   useEffect(() => {
     tokenCheck()
-    widthDisplayCheck(numberOfInitialMovies)
+    widthDisplayCheck(numberOfInitialMovies, filmRequestForSavedMovies)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -123,18 +126,17 @@ function App() {
 
   // после изменений в сохраненных карточках позьзователя выполняем функцию фильтрации
   useEffect(() => {
-    filterUserSavedMovieForRequest()
+    filterUserSavedMovieForRequest(isCheckedForSavedMovies)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSavedMovie])
 
   // функция, которая фильтрует сохраненные карточки пользователя, чтобы найти карточки по запросу
-  const filterUserSavedMovieForRequest = () => {
-    const isChecked = JSON.parse(localStorage.getItem('isCheckedForSavedMovies'))
-    const requestSavedMovies = JSON.parse(localStorage.getItem('filteringRequestForSavedMovies'))
+  const filterUserSavedMovieForRequest = (isChecked, requestSavedMovies = false) => {
     if (requestSavedMovies) {
       const userSavedMovieFiltered = userSavedMovie.filter(item => {
         return item.nameRU.toLowerCase().includes(requestSavedMovies.toLowerCase())
       })
+
       if (isChecked) {
         const newMovies = userSavedMovieFiltered.filter(item => item.duration <= DURATION_OF_SHORT_FILMS)
         setUserSavedMovieToRender(newMovies)
@@ -143,7 +145,12 @@ function App() {
       }
 
     } else {
-      setUserSavedMovieToRender(userSavedMovie)
+      if (isChecked) {
+        const newMovies = userSavedMovie.filter(item => item.duration <= DURATION_OF_SHORT_FILMS)
+        setUserSavedMovieToRender(newMovies)
+      } else {
+        setUserSavedMovieToRender(userSavedMovie)
+      }
     }
   }
 
@@ -178,6 +185,7 @@ function App() {
     mainApi.login(data.email, data.password).then((data) => {
       if (data.token) {
         localStorage.setItem("jwt", data.token)
+        setLoggedIn(true)
         tokenCheck()
         navigate("/movies")
       }
@@ -210,12 +218,16 @@ function App() {
 
   // обновление данных пользователя
   const handleUpdateUser = (data) => {
+    setIsLoading(true)
     mainApi.updateUserInfo(data.name, data.email).then((user) => {
       setCurrentUser(user)
     })
       .catch((error) => {
         console.log(error.message)
         setErrorApi(error.message)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }
 
@@ -284,28 +296,25 @@ function App() {
 
   // обработка поискового запроса для сохраненных карточек
   const handleSearchForSavedMovies = (film, isChecked) => {
+    setFilmRequestForSavedMovies(film)
     const filteredMovie = userSavedMovie.filter(item => {
       return item.nameRU.toLowerCase().includes(film.toLowerCase())
     })
-    localStorage.setItem("filteringRequestForSavedMovies", JSON.stringify(film))
     setUserSavedMovieToRender(filteredMovie)
 
     if (isChecked) {
-      handleChangeCheckboxForSavedMovies(isChecked)
+      handleChangeCheckboxForSavedMovies(isChecked, film)
     }
   }
 
   // обработчик на переключатель "короткометражки" сохраненных карточек
-  const handleChangeCheckboxForSavedMovies = (isChecked) => {
-    localStorage.setItem('isCheckedForSavedMovies', isChecked)
-
+  const handleChangeCheckboxForSavedMovies = (isChecked, film = false) => {
     const oldMovies = userSavedMovieToRender
     if (oldMovies) {
-      if (isChecked) {
-        filterUserSavedMovieForRequest()
-      }
-      else {
-        filterUserSavedMovieForRequest()
+      if (film || filmRequestForSavedMovies) {
+        filterUserSavedMovieForRequest(isChecked, film || filmRequestForSavedMovies)
+      } else {
+        filterUserSavedMovieForRequest(isChecked)
       }
     }
   }
@@ -396,7 +405,7 @@ function App() {
           {/* защищенные роуты */}
           <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
             <Route path="/movies" element={<Movies isLoading={isLoading} handleChangeCheckbox={handleChangeCheckbox} userSavedMovie={userSavedMovie} isLoadMoreBthInactive={isLoadMoreBthInactive} handleLoadMoreMovies={handleLoadMoreMovies} movies={beatfilmMoviesToRender} handleSearch={handleSearch} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie}></Movies>} />
-            <Route path="/saved-movies" element={<SavedMovies handleChangeCheckbox={handleChangeCheckboxForSavedMovies} isLoading={isLoading} movies={userSavedMovieToRender} userSavedMovie={userSavedMovie} handleSearch={handleSearchForSavedMovies} handleDeleteMovie={handleDeleteMovie} handleSaveMovie={handleSaveMovie}></SavedMovies>}></Route>
+            <Route path="/saved-movies" element={<SavedMovies searchText={filmRequestForSavedMovies} isCheckedForSavedMovies={isCheckedForSavedMovies} setIsCheckedForSavedMovies={setIsCheckedForSavedMovies} handleChangeCheckbox={handleChangeCheckboxForSavedMovies} isLoading={isLoading} movies={userSavedMovieToRender} userSavedMovie={userSavedMovie} handleSearch={handleSearchForSavedMovies} handleDeleteMovie={handleDeleteMovie} handleSaveMovie={handleSaveMovie}></SavedMovies>}></Route>
             <Route path="/profile" element={<Profile errorApi={errorApi} setErrorApi={setErrorApi} isLoading={isLoading} handleUpdateUser={handleUpdateUser} handleLogOut={handleLogOut}></Profile>}></Route>
           </Route>
 
