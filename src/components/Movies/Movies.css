@@ -24,7 +24,21 @@
     transition: opacity 0.3s linear;
 }
 
-.movies__more-button:hover{
+.movies__not-found {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #424242;
+}
+
+.movies__more-button_inactive {
+    display: none;
+}
+
+.movies__more-button:hover {
     opacity: 0.7;
 }
 
@@ -39,7 +53,7 @@
         padding: 0 10px;
     }
 
-    .movies__more-button{
+    .movies__more-button {
         width: 240px;
     }
 }
